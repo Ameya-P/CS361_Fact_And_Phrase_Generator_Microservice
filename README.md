@@ -8,3 +8,18 @@ Python driver that runs the query against our MongoDB database and hands back th
 
 # Uvicorn
 Server that runs our FastAPI app. Listen for incoming connections and serve traffic.
+
+
+## File Explanations
+
+### main.py
+Where the routes live.
+
+### models.py
+Defines Pydantic models (specifically the shape and types of our requests and responses)
+
+## db.py
+Establishes the db connection
+
+## test_main.py
+Contains integration tests. Seed data can be found in seed_data.py
