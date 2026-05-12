@@ -68,9 +68,11 @@ def test_bad_request():
     '''
     pass
 
-@patch('module.ClassName')
-def test_db_error():
+@patch('main.collection.find_one')
+def test_db_error(mock_find_one):
     '''
     Assert status code as well
     '''
+    
+    mock_find_one.side_effect = Exception("Database is down!")
     pass
