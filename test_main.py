@@ -68,11 +68,12 @@ def test_bad_request():
     '''
     pass
 
-@patch('main.collection.find_one')
-def test_db_error(mock_find_one):
+@patch('main.collection')
+def test_db_error(mock_collection):
     '''
     Assert status code as well
     '''
-    
-    mock_find_one.side_effect = Exception("Database is down!")
-    pass
+    mock_collection.find_one.side_effect = Exception("Database is down!")
+    with TestClient(app) as client:
+        # call the endpoint here
+        pass
