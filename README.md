@@ -2,7 +2,7 @@
 
 ## Technologies Used
 
-## Uvicorn
+### Uvicorn
 Server that runs our FastAPI app. Listen for incoming connections and serve traffic.
 
 ### Motor
