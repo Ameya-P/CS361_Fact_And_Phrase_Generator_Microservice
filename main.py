@@ -32,11 +32,38 @@ async def get_phrase(filter_query: Annotated[PhraseRequest, Query()]):
     Call update_num_uses after getting a phrase.
     Returns least used phrase. 
     '''
-    pass
+    
+    # when a category is specified in the filter_query, if not choose a random fact from the database
+    if filter_query.category:
+        phrase = await collection.find_one({"category": filter_query.category}, sort=[("num_uses", 1)])
+    else:
+        phrase = await collection.find_one({}, sort=[("num_uses", 1)])
+
+    # if ObjectId is not automatically jsonifiable
+    phrase["_id"] = str(phrase["_id"])
+
+    return phrase
+
+
+
+
 
 @app.patch("/phrase/")
 async def update_num_uses(filter_query: Annotated[PhraseRequest, Query()]):
     '''
     Update num_uses by 1 after getting a phrase.
     '''
-    pass
+    # will be using the same logic to find the correct id for the fact
+
+    if filter_query.category:
+        phrase = await collection.find_one({"category": filter_query.category}, sort=[("num_uses", 1)])
+    else:
+        phrase = await collection.find_one({}, sort=[("num_uses", 1)])
+
+    # update the num_uses for the selected fact
+    updated = await collection.update_one({"_id": phrase["_id"]}, {"inc": {"num_uses", 1}})
+
+
+    # return the matched and modified count number. 
+    return {"updated.matched_count: " : updated.matched_count, "updated.modified_count: " : updated.modified_count}
+
