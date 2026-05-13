@@ -18,6 +18,7 @@ Hosts the service.
 
 ### Github Actions
 CI/CD pipeline. 
+
 push to main → Actions runs tests → if tests pass → Render auto-deploys
 
 ## File Explanations
