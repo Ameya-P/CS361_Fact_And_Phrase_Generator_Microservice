@@ -30,11 +30,11 @@ Notes on how to implement it:
 
 @app.get("/phrase/")
 async def get_phrase(filter_query: Annotated[PhraseRequest, Query()]):
-    '''
-    Gets a phrase and filters by category if provided. 
+    """
+    Gets a phrase and filters by category if provided.
     Call update_num_uses after getting a phrase.
-    Returns least used phrase. 
-    '''
+    Returns least used phrase.
+    """
     
     # when a category is specified in the filter_query, if not choose a random fact from the database
     if filter_query.category:
@@ -45,12 +45,12 @@ async def get_phrase(filter_query: Annotated[PhraseRequest, Query()]):
     # error handling for when there is no phrase found in the query category 
     if phrase is None:
         if filter_query.category:
-            raise HTTPException(status_code=404, detail=f"There are no phrase found for the category: {filter_query.category}.")
+            raise HTTPException(status_code=404, detail=f"There are no phrases found for the category: {filter_query.category}.")
 
         # when there is no phrase within the database (for user story 1 where the microservice selects the fact with the lowest num_uses value.)
-        raise HTTPException(status_code=404, detail="There are no phrase found in the database.")
+        raise HTTPException(status_code=404, detail="There are no phrases found in the database.")
     else:
-        await update_num_uses(phrase._id)
+        await update_num_uses(phrase["_id"])
 
     # if ObjectId is not automatically jsonifiable
     phrase["_id"] = str(phrase["_id"])
@@ -60,20 +60,19 @@ async def get_phrase(filter_query: Annotated[PhraseRequest, Query()]):
 
 @app.patch("/phrase/")
 async def update_num_uses(phrase_id: str):
-    '''
+    """
     Update num_uses by 1 after getting a phrase.
-    '''
+    """
 
     # error handling for incorrect phrase_ids 
     try:
         object_id = ObjectId(phrase_id)
-    except bson.errors.InvalidID:
+    except bson.errors.InvalidId:
         raise HTTPException(status_code=400, detail=f"Conversion failed. Invalid ID format: {phrase_id}")
 
     updated = await collection.update_one({"_id" : object_id}, {"$inc": {"num_uses": 1}})
 
     # error for when the input phrase_id is valid but not found within the database.
-
     if updated.matched_count == 0:
         raise HTTPException(status_code=404, detail=f"There is no phrase found in the database with the phrase ID: {phrase_id}.")
     
