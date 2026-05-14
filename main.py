@@ -49,6 +49,8 @@ async def get_phrase(filter_query: Annotated[PhraseRequest, Query()]):
 
         # when there is no phrase within the database (for user story 1 where the microservice selects the fact with the lowest num_uses value.)
         raise HTTPException(status_code=404, detail="There are no phrase found in the database.")
+    else:
+        await update_num_uses(phrase._id)
 
     # if ObjectId is not automatically jsonifiable
     phrase["_id"] = str(phrase["_id"])
@@ -68,7 +70,7 @@ async def update_num_uses(phrase_id: str):
     except bson.errors.InvalidID:
         raise HTTPException(status_code=400, detail=f"Conversion failed. Invalid ID format: {phrase_id}")
 
-    updated = await collection.update_one({"_id" : object_id}, {"$inc": {"num_uses", 1}})
+    updated = await collection.update_one({"_id" : object_id}, {"$inc": {"num_uses": 1}})
 
     # error for when the input phrase_id is valid but not found within the database.
 
