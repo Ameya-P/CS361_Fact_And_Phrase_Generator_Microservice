@@ -126,12 +126,12 @@ def test_bad_request(seed_data):
         assert "Invalid ID format" in response.json()["detail"]
 
 
-@patch('main.collection')
-def test_db_error(mock_collection):
+def test_db_error():
     """
-    Tests to ensure
+    Tests to ensure that when the database is down, the proper code is returned
     """
-    mock_collection.find_one.side_effect = Exception("Database is down!")
     with TestClient(app) as client:
-        response = client.get("/phrase/")
-        assert response.status_code == 500
+        # Substitute the find_one method AFTER the server has connected to the database so that TestClient doesn't create a good connection
+        with patch.object(main.collection, 'find_one', side_effect=Exception("Database is down!")):
+            response = client.get("/phrase/")
+            assert response.status_code == 500

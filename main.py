@@ -35,12 +35,14 @@ async def get_phrase(filter_query: Annotated[PhraseRequest, Query()]):
     Call update_num_uses after getting a phrase.
     Returns least used phrase.
     """
-    
-    # when a category is specified in the filter_query, if not choose a random fact from the database
-    if filter_query.category:
-        phrase = await collection.find_one({"category": filter_query.category}, sort=[("num_uses", 1)])
-    else:
-        phrase = await collection.find_one({}, sort=[("num_uses", 1)])
+    try:
+        # when a category is specified in the filter_query, if not choose a random fact from the database
+        if filter_query.category:
+            phrase = await collection.find_one({"category": filter_query.category}, sort=[("num_uses", 1)])
+        else:
+            phrase = await collection.find_one({}, sort=[("num_uses", 1)])
+    except Exception:
+        raise HTTPException(status_code=500, detail="Could not connect to database.")
 
     # error handling for when there is no phrase found in the query category 
     if phrase is None:
