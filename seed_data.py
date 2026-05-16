@@ -9,7 +9,7 @@ seed_data_list = [
         "title": "Dinosaur Poop",
         "phrase": "The largest piece of fossilised dinosaur poo discovered is over 30cm long and over two litres in volume. Believed to be a Tyrannosaurus rex turd, the fossilised dung (also named a 'coprolite') is helping scientists better understand what the dinosaur ate.",
         "category": "Biology",
-        "num_uses": 0
+        "num_uses": 2
     },
     {
         "title": "The Universe's Color",
@@ -27,8 +27,11 @@ seed_data_list = [
         "title": "Chainsaws Were Originally Medical Tools",
         "phrase": "Chainsaws were first invented for childbirth. It was developed in Scotland in the late 18th Century to help aid and speed up the process of symphysiotomy (widening the pubic cartilage) and removal of disease-laden bone during childbirth. It wasn’t until the start of the 20th Century that we started using chainsaws for woodchopping.",
         "num_uses": 8
-    }
+    },
+    {
+        "title": "Optimistic Nihilism",
+        "phrase": "Everybody dies. Live a life you can be proud of.",
+        "category": "Existentialism",
+        "num_uses": 4
+    },
 ]
-
-
-
