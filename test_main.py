@@ -1,21 +1,3 @@
-"""
-- pytest works by looking for functions that start with test_
-    and running them automatically.
-- assert the result. If the expression after it is True, the test passes.
-    If it's False, the test fails with a clear error message.
-
-Example Test
-
-def test_something():
-    result = 2 + 2
-    assert result == 4
-
-FastAPI ships with a built-in TestClient
-
-response = client.get("/phrase/")
-assert response.status_code == 200
-"""
-
 import pytest
 from pymongo import MongoClient
 from unittest.mock import patch

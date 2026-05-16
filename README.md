@@ -1,5 +1,20 @@
 # CS361_Fact_And_Phrase_Generator_Microservice
+## Description
+description of what the microservice does
 
+## Requesting Data
+Clear instructions for how to programmatically REQUEST data from the microservice. Include an example call.
+
+## Receiving Data
+Clear instructions for how to programmatically RECEIVE data from the microservice. Include an example call.
+
+## UML Sequence Diagram
+Show how requesting and receiving data works. Make it detailed enough that your teammates (and your grader) will understand.
+
+
+
+
+# Below this heading -- all the previous content Ameya added. should be deleted at some point
 ## Technologies Used
 
 ### Uvicorn
