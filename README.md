@@ -11,7 +11,7 @@ Clear instructions for how to programmatically RECEIVE data from the microservic
 ## UML Sequence Diagram
 Show how requesting and receiving data works. Make it detailed enough that your teammates (and your grader) will understand.
 
-
+[Sequence Diagram](Fact_and_Phrase_Microservice.png)
 
 
 # Below this heading -- all the previous content Ameya added. should be deleted at some point
