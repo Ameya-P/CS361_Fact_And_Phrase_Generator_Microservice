@@ -4,7 +4,6 @@ This microservice accesses a database of facts and phrases stored on MongoDB. Cl
 
 ## Requesting Data
 To request a fact or phrase, make an HTTP GET request to the /phrase/ endpoint. You can append an optional category query parameter to filter the results. If no category is provided, it retrieves the least-used phrase across all categories.
-Example call: Will need the Render url where it is hosted
 
 You can simply paste either of these urls into your address bar to quickly test the application:
 ```
