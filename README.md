@@ -1,6 +1,6 @@
 # CS361_Fact_And_Phrase_Generator_Microservice
 ## Description
-description of what the microservice does
+This microservice accesses a database of facts and phrases stored on MongoDB. Client programs can make API requests to the service to receive either a random string from the entire database or a random string from within a specific category within the database. The microservice counts the number of times each string has been returned and prioritizes those that have been returned less often.
 
 ## Requesting Data
 Clear instructions for how to programmatically REQUEST data from the microservice. Include an example call.
