@@ -16,6 +16,7 @@ Fast API/Motor<--MongoDB:returns BSON object {ObjectId, title, phrase, category,
 
 Fast API/Motor->MongoDB:update_one(phrase["_id"]) 
 Fast API/Motor<--MongoDB:  return { \n        "phrase_id" : phrase_id,\n        "updated.matched_count: " : updated.matched_count, \n        "updated.modified_count: " : updated.modified_count\n        }
+deactivate MongoDB
 Client<--Fast API/Motor:returns HTTP status 200 and JSON object {phrase ID, title, phrase, category, num_uses}
 end
 deactivate Fast API/Motor
@@ -24,7 +25,7 @@ deactivate MongoDB
 Client->Fast API/Motor:GET /phrase/?category=Existentialism
 activate Fast API/Motor
 Fast API/Motor->MongoDB:find_one({"Existentialism"}, [sorted by num_uses ascending])
-
+activate MongoDB
 alt When the category is empty
 Fast API/Motor<--MongoDB:return None
 Client<--Fast API/Motor:status 404 with message: "There are no phrases found in the category: Existentialism." 
@@ -33,10 +34,8 @@ Fast API/Motor<--MongoDB:returns BSON object {ObjectId, title, phrase, category,
 
 Fast API/Motor->MongoDB:update_one(phrase["_id"]) 
 Fast API/Motor<--MongoDB:  return { \n        "phrase_id" : phrase_id,\n        "updated.matched_count: " : updated.matched_count, \n        "updated.modified_count: " : updated.modified_count\n        }
+deactivate MongoDB
 Client<--Fast API/Motor:returns HTTP status 200 and JSON object {phrase ID, title, phrase, category, num_uses}
 end
-
-
-
 deactivate Fast API/Motor
 deactivate MongoDB
