@@ -36,11 +36,13 @@ async def get_phrase(filter_query: Annotated[PhraseRequest, Query()]):
     Returns least used phrase.
     """
     try:
-        # when a category is specified in the filter_query, if not choose a random fact from the database
+        # filter by category when provided; otherwise search across all phrases
+        query = {}
+
         if filter_query.category:
-            phrase = await collection.find_one({"category": filter_query.category}, sort=[("num_uses", 1)])
-        else:
-            phrase = await collection.find_one({}, sort=[("num_uses", 1)])
+            query["category"] = filter_query.category
+
+        phrase = await collection.find_one(query, sort=[("num_uses", 1)])
     except Exception:
         raise HTTPException(status_code=500, detail="Could not connect to database.")
 
