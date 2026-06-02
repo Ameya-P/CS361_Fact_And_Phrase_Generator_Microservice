@@ -20,20 +20,13 @@ def connect_to_test_db():
     return collection
 
 
-# added this because testing needs to target the test database, not
-#   the production one. This way, the connect_to_db function from db.py
-#   can be swapped out for testing purposes.
-def override_connect_to_db():
+def connect_to_test_db():
     MONGO_URI = os.getenv('MONGO_URI')
     async_client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URI)
     return async_client["test-microservices"]["test-fact-or-phrase-generator"]
 
 
-# Perform the swap so that when FastAPI runs the startup sequence
-#   for the app, the lifespan function uses a different function to
-#   connect to the database. This way we are ensuring we connect to a
-#   test database, not the production one
-main.connect_to_db = override_connect_to_db
+main.connect_to_db = connect_to_test_db
 
 
 @pytest.fixture
@@ -44,13 +37,7 @@ def seed_data():
     test_collection.drop()
 
 
-# global variable for TestClient used to be here, no longer because it prevented
-#   us from running multiple GETs within the same test. The client would run once
-#   but then it would pass the yield statement in the lifespan function in main,
-#   causing app to be killed. This is fixed with "with" blocks below.
-
 # --- Tests -----
-
 
 def test_no_category(seed_data):
     """
